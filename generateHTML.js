@@ -25,7 +25,7 @@ const colors = {
     }
 };
 
-function generateHTML(data) {
+function generateHTML(answers) {
     return `<!DOCTYPE html>
   <html lang="en">
      <head>
@@ -170,5 +170,9 @@ function generateHTML(data) {
               zoom: .75; 
             } 
            }
-        </style>`
+        </style>
+        </head>
+        <body>
+
+        </body>`
 }
