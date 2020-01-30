@@ -3,55 +3,14 @@ const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
 const generateHTML = require("./generateHTML")
-
-
+const pdf = require('html-pdf')
 const writeToFileAsync = util.promisify(fs.writeFile);
-const appendToFileAsync = util.promisify(fs.appendFile);
-
-
-// I need data, github username and a color
-
-// function writeToFile(fileName, data) {
-
-// }
-const gitUrl = `https://api.github.com/users/`;
-
-// inquirer
-//     .prompt(questions)
-//     .then(function (data) {
-
-//         let { userName } = data.username;
-//         let colorData = data.color;
-
-//         axios
-//             .get(gitUrl + userName)
-//             .then(function (res) {
-
-//                 let profileData = res.data;
-
-
-
-//                 console.log(colorData)
-//                 console.log(profile)
-//                 let newHtml = generateHTML(data)
-//                 console.log(newHtml)
-//                 await writeToFileAsync(`${userName}.html`, newHtml)
-//             });
-//     })
-//     .catch(function (err) {
-//         console.log(err)
-//     });
-
-
-
-
 
 async function init() {
     try {
-
+        let name = await fullName();
         let { username } = await getName();
-        // const { profileName } = userName;
-        let { color } = await getColor();
+        let color = await getColor();
         let githubReturn = await gitHubCall(username);
         let userStars = await getGithubStarred(username);
         let userProfile = githubReturn.data
@@ -67,14 +26,33 @@ async function init() {
             following: userProfile.following,
             repos: userProfile.public_repos
         }
-        console.log(color)
-        console.log(profile)
-        console.log(userStars.data.length)
+        let starred = userStars.data.length;
+        let newHtml = generateHTML(color, profile, starred, name)
+        let options = { format: 'A4' };
+        await writeToFileAsync(`${username}.html`, newHtml)
+        var html = await fs.readFileSync(`./${username}.html`, 'utf8')
+        pdf.create(html, options).toFile(`./${username}.pdf`, function (err, res) {
+            if (err) return console.log(err);
+            console.log(res); // { filename: '/app/businesscard.pdf' }
+        });
+        console.log("Success!")
     } catch (err) {
         console.log(err)
     }
 }
-
+function fullName() {
+    return inquirer
+        .prompt([{
+            type: "input",
+            message: "What is your first name?",
+            name: "firstname"
+        },
+        {
+            type: "input",
+            message: "What is your last name?",
+            name: "lastname"
+        }])
+}
 function getName() {
     let username = inquirer
         .prompt({

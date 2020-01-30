@@ -1,32 +1,4 @@
-const colors = {
-    green: {
-        wrapperBackground: "#E6E1C3",
-        headerBackground: "#C1C72C",
-        headerColor: "black",
-        photoBorderColor: "#black"
-    },
-    blue: {
-        wrapperBackground: "#5F64D3",
-        headerBackground: "#26175A",
-        headerColor: "white",
-        photoBorderColor: "#73448C"
-    },
-    pink: {
-        wrapperBackground: "#879CDF",
-        headerBackground: "#FF8374",
-        headerColor: "white",
-        photoBorderColor: "#FEE24C"
-    },
-    red: {
-        wrapperBackground: "#DE9967",
-        headerBackground: "#870603",
-        headerColor: "white",
-        photoBorderColor: "white"
-    }
-};
-
-function generateHTML(data, profile, starred, name) {
-    return `<!DOCTYPE html>
+<!DOCTYPE html>
   <html lang="en">
      <head>
         <meta charset="UTF-8" />
@@ -52,7 +24,7 @@ function generateHTML(data, profile, starred, name) {
            height: 100%;
            }
            .wrapper {
-           background-color: ${colors[data.color].wrapperBackground};
+           background-color: #DE9967;
            padding-top: 100px;
            }
            body {
@@ -94,8 +66,8 @@ function generateHTML(data, profile, starred, name) {
            display: flex;
            justify-content: center;
            flex-wrap: wrap;
-           background-color: ${colors[data.color].headerBackground};
-           color: ${colors[data.color].headerColor};
+           background-color: #870603;
+           color: white;
            padding: 10px;
            width: 95%;
            border-radius: 6px;
@@ -106,7 +78,7 @@ function generateHTML(data, profile, starred, name) {
            border-radius: 50%;
            object-fit: cover;
            margin-top: -75px;
-           border: 6px solid ${colors[data.color].photoBorderColor};
+           border: 6px solid white;
            box-shadow: rgba(0, 0, 0, 0.3) 4px 1px 20px 4px;
            }
            .photo-header h1, .photo-header h2 {
@@ -149,8 +121,8 @@ function generateHTML(data, profile, starred, name) {
            .card {
              padding: 20px;
              border-radius: 6px;
-             background-color: ${colors[data.color].headerBackground};
-             color: ${colors[data.color].headerColor};
+             background-color: #870603;
+             color: white;
              margin: 20px;
            }
            
@@ -176,16 +148,16 @@ function generateHTML(data, profile, starred, name) {
     <div class="main wrapper">
         <div class="row">
             <div class="photo-header">
-                <img src="${profile.picture}" alt="a picture of the user" class="header">
+                <img src="https://avatars1.githubusercontent.com/u/54296584?v=4" alt="a picture of the user" class="header">
                 <h1>Hi!
                     <br>
-                    My name is ${name.firstname} ${name.lastname}!
+                    My name is jacob dolph!
                 </h1>
                 <nav>
                     <ul class="links-nav">
-                        <li class="nav-link">${profile.location}</li>
-                        <li class="nav-link"><a href="${profile.github}">Github</a></li>
-                        <li class="nav-link"><a href="${profile.blog}">Blog</a></li>
+                        <li class="nav-link">Salt Lake City, Utah</li>
+                        <li class="nav-link"><a href="https://github.com/jacobdolph">Github</a></li>
+                        <li class="nav-link"><a href="jacobdolph.github.io/Working-Portfolio">Blog</a></li>
                     </ul>
                 </nav>
             </div>
@@ -194,7 +166,7 @@ function generateHTML(data, profile, starred, name) {
             <div class="container">
                 <div class="col">
                     <h2 style="color: white;">
-                        ${profile.bio}
+                        JavaScript Dev, on a journey to a higher level of consciousness with coding
                     </h2>
                     <div class="container">
                         <div class="row">
@@ -203,13 +175,13 @@ function generateHTML(data, profile, starred, name) {
                                 <div class="card">
                                     <h2>
                                         Public Repositories <br>
-                                        ${profile.repos}
+                                        15
                                     </h2>
                                 </div>
                                 <div class="card">
                                     <h2>
                                         Following <br>
-                                        ${profile.following}
+                                        11
                                     </h2>
                                 </div>
                             </div>
@@ -218,13 +190,13 @@ function generateHTML(data, profile, starred, name) {
                                 <div class="card">
                                     <h2>
                                         Github Stars <br>
-                                        ${starred}
+                                        4
                                     </h2>
                                 </div>
                                 <div class="card">
                                     <h2>
                                         Followers <br>
-                                        ${profile.followers}
+                                        10
                                     </h2>
                                 </div>
                             </div>
@@ -237,6 +209,4 @@ function generateHTML(data, profile, starred, name) {
     </div>
 
     </div>
-</body>`
-}
-module.exports = generateHTML; 
+</body>
