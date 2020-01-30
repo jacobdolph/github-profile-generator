@@ -2,10 +2,13 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
-const generateHTML = require("./generateHTML.js");
-console.log(generateHTML.colors);
+const generateHTML = require("./generateHTML")
+
+
 const writeToFileAsync = util.promisify(fs.writeFile);
 const appendToFileAsync = util.promisify(fs.appendFile);
+
+
 // I need data, github username and a color
 const questions = [{
     type: "input",
@@ -15,24 +18,27 @@ const questions = [{
 {
     type: "input",
     message: "What is your favorite color?",
-    name: "color"
+    name: "color",
+    choices: ["green", "pink", "red", "blue"]
+
 }];
 function writeToFile(fileName, data) {
 
 }
 const gitUrl = `https://api.github.com/users/`;
 
-function getProfile(response) {
 
-}
 inquirer
     .prompt(questions)
-    .then(function (response) {
+    .then(function (data) {
 
-        let userName = response.username
+        let { userName } = data.username;
+        let colorData = data.color;
+
         axios
             .get(gitUrl + userName)
             .then(function (res) {
+
                 let profileData = res.data;
                 let bioBio = profileData.bio.split(".");
                 let bioEmail = profileData.bio.split("\r\n\r\n");
@@ -49,16 +55,11 @@ inquirer
                     following: profileData.following,
                     repos: profileData.public_repos
                 }
+                console.log(colorData)
                 console.log(profile)
-
-
-
-
-
-
-
-
-
+                let newHtml = generateHTML(data)
+                console.log(newHtml)
+                await writeToFileAsync(`${userName}.html`, newHtml)
             });
     })
     .catch(function (err) {
@@ -68,7 +69,9 @@ inquirer
 
 
 
-// async function init() {
-//     console.log("hi")
-// }
-// init();
+
+async function init() {
+
+
+}
+init();
